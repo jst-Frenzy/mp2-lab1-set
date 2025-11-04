@@ -1,0 +1,49 @@
+// header.h: включаемый файл для стандартных системных включаемых файлов
+// или включаемые файлы для конкретного проекта
+//
+
+#pragma once
+#define WIN32_LEAN_AND_MEAN             // Исключите редко используемые компоненты из заголовков Windows
+#include <iostream>
+#include "tset.h"
+using namespace std;
+
+class Light {
+public:
+	virtual bool isGreen() const = 0;
+	virtual bool isYellow() const = 0;
+	virtual bool isRed() const = 0;
+	virtual void switchLight() = 0;
+};
+
+class pLight : public Light {
+	TSet state;
+	int maxState;
+public:
+	pLight();
+	void switchLight();
+	virtual bool isGreen() const;
+	virtual bool isYellow() const;
+	virtual bool isRed() const;
+};
+
+class cLight : public Light {
+	TSet state;
+	int maxState;
+public:
+	cLight();
+	void switchLight();
+	virtual bool isGreen() const;
+	virtual bool isYellow() const;
+	virtual bool isRed() const;
+};
+
+class Crossroad {
+	pLight pl;
+	cLight cl;
+public:
+	Crossroad();
+	void switchLight();
+	ostream& printL(ostream& out, const Light& l) const;
+	friend ostream& operator<< (ostream& out, const Crossroad& r);
+};
